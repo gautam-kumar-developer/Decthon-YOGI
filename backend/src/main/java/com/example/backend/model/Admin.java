@@ -43,7 +43,5 @@ public class Admin {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
-    // Getters and Setters
 }
 
