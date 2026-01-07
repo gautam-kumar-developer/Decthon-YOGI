@@ -2,8 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-gray-50 text-gray-900;
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #050510;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg;
+  }
+  
+  .glass-input {
+    @apply bg-dark-input/50 border border-white/10 text-white placeholder-gray-500 focus:border-neon-cyan focus:outline-none focus:ring-1 focus:ring-neon-cyan transition-all duration-300;
+  }
+
+  .neon-button {
+    @apply px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg active:scale-95;
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
   }
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050510;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1a3a; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00f3ff;
+}
+/* Responsive Typography */
+h1 {
+  @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+} 

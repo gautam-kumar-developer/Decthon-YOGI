@@ -1,36 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, LayoutDashboard } from 'lucide-react';
+import { useRole } from '../context/RoleContext';
+import NeonButton from '../components/NeonButton';
+import GlassCard from '../components/GlassCard';
+import { ArrowRight, Zap, Shield } from 'lucide-react';
 
-export default function Home() {
+const Home = () => {
+    const { role } = useRole();
+
     return (
-        <div className="flex flex-col items-center justify-center py-20 bg-gradient-to-br from-indigo-50 to-white rounded-3xl shadow-sm border border-indigo-100">
-            <div className="text-center max-w-2xl px-6">
-                <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-6">
-                    Smart City <span className="text-indigo-600">AI System</span>
+        <div className="flex flex-col items-center justify-center min-h-[80vh] text-center gap-8">
+            <div className="relative">
+                <h1 className="text-6xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-500 mb-4 tracking-tighter">
+                    SMART<span className="text-neon-cyan drop-shadow-[0_0_20px_rgba(0,243,255,0.5)]">CITY</span>
                 </h1>
-                <p className="text-xl text-gray-600 mb-10 leading-relaxed">
-                    Experience the future of urban management.
-                    Seamlessly report issues, track resolutions, and empower city officials
-                    with AI-driven insights.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link
-                        to="/submit"
-                        className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-xl md:px-10 transition-all shadow-md hover:shadow-lg"
-                    >
-                        <FileText className="w-5 h-5 mr-2" />
-                        Register Complaint
-                    </Link>
-                    <Link
-                        to="/admin"
-                        className="inline-flex items-center justify-center px-8 py-4 border border-gray-300 text-lg font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-xl md:px-10 transition-all shadow-sm hover:shadow-md"
-                    >
-                        <LayoutDashboard className="w-5 h-5 mr-2" />
-                        Admin Dashboard
-                    </Link>
+                <div className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto">
+                    The future of urban management is here. Seamlessly automated, transparent, and efficient.
                 </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mt-8">
+                <GlassCard className="flex flex-col items-center gap-4 hover:border-neon-cyan/50 group cursor-pointer transition-all">
+                    <div className="w-16 h-16 rounded-full bg-neon-cyan/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Zap className="w-8 h-8 text-neon-cyan" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-white">Citizen Services</h2>
+                    <p className="text-gray-400 text-sm">
+                        Report issues, track complaints, and make your voice heard in real-time.
+                    </p>
+                    <div className="mt-auto pt-4">
+                        {role === 'User' ? (
+                            <Link to="/user/complaint/new">
+                                <NeonButton variant="cyan">Get Started <ArrowRight className="w-4 h-4" /></NeonButton>
+                            </Link>
+                        ) : (
+                            <span className="text-xs text-gray-500 uppercase tracking-widest border-spacing-7">Switch to User Role</span>
+                        )}
+                    </div>
+                </GlassCard>
+
+                <GlassCard className="flex flex-col items-center gap-4 hover:border-neon-pink/50 group cursor-pointer transition-all">
+                    <div className="w-16 h-16 rounded-full bg-neon-pink/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Shield className="w-8 h-8 text-neon-pink" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-white">Administration</h2>
+                    <p className="text-gray-400 text-sm">
+                        Monitor city metrics, manage departments, and resolve critical issues.
+                    </p>
+                    <div className="mt-auto pt-4">
+                        {role === 'Admin' ? (
+                            <Link to="/admin/dashboard">
+                                <NeonButton variant="pink">Access Dashboard <ArrowRight className="w-4 h-4" /></NeonButton>
+                            </Link>
+                        ) : (
+                            <span className="text-xs text-gray-500 uppercase tracking-widest">Switch to Admin Role</span>
+                        )}
+                    </div>
+                </GlassCard>
             </div>
         </div>
     );
-}
+};
+
+export default Home;

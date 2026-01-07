@@ -1,19 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
-import MainLayout from './components/MainLayout';
+import Main from './components/Main';
 import Home from './pages/Home';
-
+import { BrowserRouter } from 'react-router-dom';
+import { RoleProvider } from './context/RoleContext';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        {/* <Route path="submit" element={<SubmitComplaint />} />
-        <Route path="status" element={<ComplaintStatus />} />
-        <Route path="admin" element={<AdminDashboard />} />
-        <Route path="analytics" element={<Analytics />} /> */}
-      </Route>
-    </Routes>
+    <BrowserRouter>
+      <RoleProvider>
+        <Routes>
+          <Route path="/" element={<Main />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+      </RoleProvider>
+      </BrowserRouter >
   );
 }
 
