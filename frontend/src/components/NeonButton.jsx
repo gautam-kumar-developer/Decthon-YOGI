@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 const NeonButton = ({
     children,
-    variant = 'cyan',
+    variant = 'cyan', // cyan, pink, green
     isLoading = false,
     className,
     ...props
