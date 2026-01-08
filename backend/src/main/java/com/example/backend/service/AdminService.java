@@ -1,11 +1,10 @@
 package com.example.backend.service;
 
-
 import com.example.backend.Roles;
-import com.example.backend.model.User;
+import com.example.backend.model.Admin;
+import com.example.backend.repository.AdminRepository;
 import com.example.backend.security.jwt.JwtAuthenticationResponse;
-import com.example.backend.dto.user.UserLoginRequestDTO;
-import com.example.backend.repository.UserRepository;
+import com.example.backend.dto.admin.LoginRequestDTO;
 import com.example.backend.security.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,19 +17,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class AdminService {
     private PasswordEncoder passwordEncoder;
-    private UserRepository userRepository;
+    private AdminRepository adminRepository;
     private AuthenticationManager authenticationManager;
     private JwtUtils jwtUtils;
 
-    public User registerUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Roles.USER);
-        return userRepository.save(user);
+    public Admin registerAdmin(Admin admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setRole(Roles.ADMIN);
+        return adminRepository.save(admin);
     }
 
-    public JwtAuthenticationResponse authenticateUser(UserLoginRequestDTO loginRequest){
+    public JwtAuthenticationResponse authenticateAdmin(LoginRequestDTO loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
                         loginRequest.getPassword()));
@@ -40,9 +39,9 @@ public class UserService {
         return new JwtAuthenticationResponse(jwt);
     }
 
-    public User findByUsername(String name) {
-        return userRepository.findByEmail(name).orElseThrow(
-                () -> new UsernameNotFoundException("User not found with username: " + name)
+    public Admin findByEmail(String email) {
+        return adminRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("Admin not found with email: " + email)
         );
     }
 }

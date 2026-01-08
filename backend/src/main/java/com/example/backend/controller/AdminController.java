@@ -5,12 +5,15 @@ import com.example.backend.model.Complaint;
 import com.example.backend.repository.AdminRepository;
 import com.example.backend.repository.ComplaintRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admins")
+@RequestMapping("/api/admin")
+@CrossOrigin
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final AdminRepository adminRepository;

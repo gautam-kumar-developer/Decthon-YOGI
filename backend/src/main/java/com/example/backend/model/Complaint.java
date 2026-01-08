@@ -30,7 +30,7 @@ public class Complaint {
     private String department;
 
     @Column(nullable = false)
-    private String priority;
+    private String severity;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

@@ -11,9 +11,6 @@ import lombok.*;
 @Builder
 public class SignUpRequestDTO {
 
-    @NotBlank
-    private String username;
-
     @Email
     @NotBlank
     private String email;

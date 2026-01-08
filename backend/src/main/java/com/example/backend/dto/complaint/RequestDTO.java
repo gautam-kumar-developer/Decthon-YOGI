@@ -15,8 +15,8 @@ public class RequestDTO {
     private String department;
 
     @NotBlank
-    private String priority;
+    private String severity;
 
-    private String image;
+//    private String image;
 
 }

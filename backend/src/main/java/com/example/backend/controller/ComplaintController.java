@@ -1,9 +1,12 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.complaint.RequestDTO;
 import com.example.backend.model.Admin;
 import com.example.backend.model.Complaint;
+import com.example.backend.model.ComplaintEntity;
 import com.example.backend.model.User;
-import com.example.backend.repository.AdminRepository;;
+import com.example.backend.repository.AdminRepository;
+import com.example.backend.repository.ComplaintEntityRepository;
 import com.example.backend.repository.ComplaintRepository;
 import com.example.backend.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -12,31 +15,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/complaints")
+@RequestMapping("/api/complaint")
+@CrossOrigin
+
 public class ComplaintController {
 
     private final ComplaintRepository complaintRepository;
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
+    private final ComplaintEntityRepository complaintEntityRepository;
 
     public ComplaintController(ComplaintRepository complaintRepository,
                                UserRepository userRepository,
-                               AdminRepository adminRepository) {
+                               AdminRepository adminRepository,
+                               ComplaintEntityRepository complaintEntityRepository) {
         this.complaintRepository = complaintRepository;
         this.userRepository = userRepository;
         this.adminRepository = adminRepository;
+        this.complaintEntityRepository = complaintEntityRepository;
     }
 
     // Raise a Complaint
-    @PostMapping("/create/{userId}")
-    public ResponseEntity<Complaint> createComplaint(
-            @PathVariable Long userId,
-            @RequestBody Complaint complaint) {
+    @PostMapping("/create")
+    public ResponseEntity<ComplaintEntity> createComplaint(
+            @RequestBody RequestDTO requestDTO) {
 
-        User user = userRepository.findById(userId).orElseThrow();
-        complaint.setUser(user);
+        ComplaintEntity complaint = new ComplaintEntity();
+        complaint.setDepartment(requestDTO.getDepartment());
+        complaint.setDescription(requestDTO.getDescription());
+        complaint.setStatus("Pending");
+        complaint.setSeverity(requestDTO.getSeverity());
 
-        return ResponseEntity.ok(complaintRepository.save(complaint));
+
+        return ResponseEntity.ok(complaintEntityRepository.save(complaint));
     }
 
     // Assign Complaint to Admin
